@@ -1,0 +1,165 @@
+<html>
+<head>
+	<title>Lab 8 - Tic Tac Toe</title>
+	<link rel="stylesheet" type="text/css" href="css\tictac.css" />
+</head>
+<body>
+	<h1>Tic Tac Toe</h1>
+    <table>
+        <tr>
+            <td onclick="ticTacToe('00')" id="00">&nbsp;</td>
+            <td onclick="ticTacToe('01')" id="01">&nbsp;</td>
+            <td onclick="ticTacToe('02')" id="02">&nbsp;</td>
+        </tr>
+        <tr>
+            <td onclick="ticTacToe('10')" id="10">&nbsp;</td>
+            <td onclick="ticTacToe('11')" id="11">&nbsp;</td>
+            <td onclick="ticTacToe('12')" id="12">&nbsp;</td>
+        </tr>
+        <tr>
+            <td onclick="ticTacToe('20')" id="20">&nbsp;</td>
+            <td onclick="ticTacToe('21')" id="21">&nbsp;</td>
+            <td onclick="ticTacToe('22')" id="22">&nbsp;</td>
+        </tr>
+    </table>
+    <br>
+    <p id="msg">&nbsp;</p>
+    <center><input type="button" onclick="reset()" id="btnReset" value="reset"></center>
+    <script>
+    	var row = 3;
+		var col = 3;
+		var turn = 0;
+		var x_o = "";
+		var color = "";
+		
+		function ticTacToe(id)
+		{
+			if (turn % 2 == 0)
+			{
+				x_o = "X";
+				color = "#3399FF";
+			}
+			else
+			{
+				x_o = "O";
+				color = "#339966";
+			}
+			
+			if (document.getElementById(id).innerHTML === "&nbsp;")
+			{
+				document.getElementById(id).innerHTML = x_o;
+				document.getElementById(id).style.backgroundColor = color;
+				document.getElementById("msg").innerHTML = ("&nbsp;");
+				turn++;
+				checkWinner();
+			}
+			else
+			{
+				if (document.getElementById("msg").innerHTML !== "The X wins!!!" && document.getElementById("msg").innerHTML !== "The O wins!!!")
+				{
+					document.getElementById("msg").innerHTML = ("You cannot change a previous move!");
+				}
+			}
+		}
+		
+		function reset()
+		{
+            // Reset the game...
+			location.reload();	
+		}
+		
+		function checkWinner()
+		{
+            // If there is a winner, display an appropiate message in id="msg". 
+            // If there is an empty field, change it to "-" with a background color of gray.
+            if (checkHorizontal() || checkVertical() || checkDiagonal())
+			{
+				document.getElementById("msg").innerHTML = ("The " + x_o + " wins!!!");
+			
+				for (var i = 0; i < row; i++){
+					for (var j = 0; j < col; j++){
+						if (document.getElementById([i] + [j]).innerHTML === "&nbsp;"){
+							document.getElementById([i] + [j]).innerHTML = "-";
+							document.getElementById([i] + [j]).style.backgroundColor = "#808080";
+						}
+							console.log([i] + [j]);
+					}
+				}			
+			}
+	
+			else
+			{
+				noWinner();		
+			}					
+		}
+		
+		function checkHorizontal()
+		{
+			// Implement an if statement that determines if the 
+            // first, second or third horizontal line meets the winning criteria
+            // If any condition is true, your function needs to return true.
+			if (document.getElementById("00").innerHTML === x_o &&
+				document.getElementById("01").innerHTML === x_o &&
+				document.getElementById("02").innerHTML === x_o
+				||
+				document.getElementById("10").innerHTML === x_o &&
+				document.getElementById("11").innerHTML === x_o &&
+				document.getElementById("12").innerHTML === x_o
+				||
+				document.getElementById("20").innerHTML === x_o &&
+				document.getElementById("21").innerHTML === x_o &&
+				document.getElementById("22").innerHTML === x_o)
+				{
+					return true;
+				}
+		}
+
+		function checkVertical()
+		{
+            // Implement an if statement that determines if the 
+            // first, second or third vertical line meets the winning criteria
+            // If any condition is true, your function needs to return true.
+			if (document.getElementById("00").innerHTML === x_o &&
+				document.getElementById("10").innerHTML === x_o &&
+				document.getElementById("20").innerHTML === x_o
+				||
+				document.getElementById("01").innerHTML === x_o &&
+				document.getElementById("11").innerHTML === x_o &&
+				document.getElementById("21").innerHTML === x_o
+				||
+				document.getElementById("02").innerHTML === x_o &&
+				document.getElementById("12").innerHTML === x_o &&
+				document.getElementById("22").innerHTML === x_o)
+				{
+					return true;
+				}
+		}
+		
+		function checkDiagonal()
+		{
+            // Implement an if statement that determines if the 
+            // left or right diagonal meets the winning criteria.
+            // If either condition is true, your function needs to return true.
+			if (document.getElementById("00").innerHTML === x_o &&
+				document.getElementById("11").innerHTML === x_o &&
+				document.getElementById("22").innerHTML === x_o
+				||
+				document.getElementById("02").innerHTML === x_o &&
+				document.getElementById("11").innerHTML === x_o &&
+				document.getElementById("20").innerHTML === x_o)
+				{
+					return true;
+				}
+		}	
+		
+		function noWinner()
+		{
+            // Implement an if statement that determines no one won.
+            // If no one has won the game, display an appropiate message in id="msg"
+			if (turn == 9){
+				document.getElementById("msg").innerHTML = ("No one won! Try again!");
+			}
+		}	
+    </script>
+</body>
+</html>
